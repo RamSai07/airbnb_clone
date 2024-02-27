@@ -1,6 +1,7 @@
 import React from 'react';
 import "../../CSS/Home.css";
 import Search from './Search';
+import Filter from './Filter';
 const Header = () => {
   return (
     <>
@@ -9,6 +10,7 @@ const Header = () => {
       
       <div className='search_filter'>
         <Search/>
+        <Filter/>
       </div>
       <span class="material-symbols-outlined web_logo">account_circle</span>
       </nav>
