@@ -170,7 +170,7 @@ const FilterModal = ({selectedFilters,onFilterChange,onClose}) => {
                     <span>&times;</span>
                 </button>
                 {/* filter sections */}
-                <div className='modal-filter-container'>
+                <div className='modal-filters-container'>
                     <div className='filter-section'>
                         <label>Price Range:</label>
                         <InputRange

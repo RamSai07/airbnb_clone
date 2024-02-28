@@ -5,6 +5,7 @@ import {Outlet} from "react-router-dom";
 //outlet is used to render the content of nested routes
 import Footer from './Footer';
 import Header from './Header';
+// import PropertyList from './PropertyList';
 const Main = () => {
   return (
     <div>
