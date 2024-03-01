@@ -11,8 +11,8 @@ function App() {
       
       //routes are created by passing a path as the first parameter and what component should be rendered when that path
       //exact properties ensure that route matches exactly that u gave in path
-      <Route path="/" element={<Main/>} exact>
-        <Route path="/" element={<PropertyList/>} exact/> 
+      <Route path="/" element={<Main/>}   id='main' exact>
+        <Route id='home' index element={<PropertyList/>} exact/> 
       </Route>
       
 

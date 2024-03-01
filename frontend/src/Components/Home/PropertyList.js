@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useEffect,useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { propertyAction } from '../../Store/Property/property-slice';
+import { getAllProperties } from '../../Store/Property/property-action';
 const Card = ({image,address,price,name})=>{
     return (
         <figure className='property'>
@@ -23,43 +26,52 @@ const Card = ({image,address,price,name})=>{
 }
 
 const PropertyList = () => {
-    const cardsData =[
-        {
-            id:1,
-            image:"/assets/image1.jpeg",
-            name:'House Manali',
-            address:"Manali Road, Himachal Pradesh,India",
-            price:1999,
-        },
-        {
-            id:2,
-            image:"/assets/property2.webp",
-            name:'Villa Home',
-            address:"Coorg,India",
-            price:4000,
-        },
-        {
-            id:1,
-            image:"/assets/property3.webp",
-            name:'House of  Nature',
-            address:"Nature's Way, Kashmir Valley, India" ,
-            price:3500,
-        },
-    ]
+   
+    const [currentPage,setCurrentPage]=useState({page:1});
+    
+    const { properties, totalProperties } = useSelector(
+        (state) => state.properties
+    );
+    
+    // const [properties, totalProperties] = useSelector(
+    //     (state) => [state.properties.properties, state.properties.totalProperties]
+    //   );
+      
+    const lastpage  = Math.ceil(totalProperties / 12);
+    const dispatch=useDispatch();
+
+    useEffect(()=>{
+        const fetchProperties = async (page) =>{
+            dispatch(propertyAction.updateSearchParams(page));
+            dispatch(getAllProperties());
+        };
+        fetchProperties(currentPage);
+    },[currentPage,dispatch]);
   return (
-    <div className='propertylist'>
-        {cardsData.map((card)=>(
+    <>
+    {properties.length===0 ? (
+        <p className='not_found'>"Property not found ....."</p>
+    ):(
+        <div className='propertylist'>
+        {properties.map((property)=>(
             <Card
-            key={card.id}
-            name= {card.name}
-            image={card.image}
-            address={card.address}
-            price={card.price}
+            key={property.id}
+            name= {property.propertyName}
+            id={property._id}
+            image={property.images[0].url}
+            // address={`${property.address.city},${property.address.state},${property.address.pincode}`}
+            address = {`${property.address.city}, ${property.address.state}, ${property.address.pincode}`}
+
+            price={property.price}
             />
         ))}
 
     </div>
-  )
+
+    )}
+    </>
+ 
+  );
 }
 
 export default PropertyList;
