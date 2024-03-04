@@ -69,6 +69,23 @@ const PropertyList = () => {
     </div>
 
     )}
+
+    {/* pagination controls */}
+    <div className='pagination'>
+            <button className='previous_btn' onClick={()=>setCurrentPage((prev)=>({page:prev.page-1}))}
+            disabled={currentPage.page === 1}
+
+            >
+                <span class="material-symbols-outlined">arrow_back_ios_new</span>
+            </button>
+
+            <button className='next_btn' onClick={()=>setCurrentPage((prev)=>({page:prev.page+1}))}
+            disabled={properties.length<12||currentPage.page === lastpage}
+
+            >
+                <span class="material-symbols-outlined">arrow_forward_ios</span>
+            </button>
+    </div>
     </>
  
   );

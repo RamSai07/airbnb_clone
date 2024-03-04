@@ -1,40 +1,52 @@
-import React,{useState} from 'react';
-import FilterModal from './FilterModal';
+import React, { useEffect, useState } from "react";
+import FilterModal from "./FilterModal";
+import { useDispatch } from "react-redux";
+import { getAllProperties } from "../../Store/Property/property-action";
+import { propertyAction } from "../../Store/Property/property-slice";
 
 const Filter = () => {
-  // state for controlling media visability
-  const  [isModalOpen, setModalOpen] = useState(false);
-  //state for storing  selected filter value
+  // State for controlling model visibility.
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // State for Stroing selected filters.
   const [selectedFilters, setSelectedFilters] = useState({});
-  // function  to handle opening the modal
-  const handelOpenModel =() =>{
-      setModalOpen(true);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(propertyAction.updateSearchParams(selectedFilters));
+    dispatch(getAllProperties());
+  }, [selectedFilters, dispatch]);
+  //functiont o handle open Modal/popup window
+  const handleOpenmodal = () => {
+    setIsModalOpen(true);
   };
-
-  // function to close the model 
-  const  handleCloseModal=()=>{
-    setModalOpen(false)
-  }
-  // function to handel changes in filter
-  const handelFilterChange = (filterName,value) =>{
-    setSelectedFilters((prevFilters)=> ({
-      ...prevFilters ,
-      [filterName]:value,
+  //functionto close the window
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  //function to handle the changes filter
+  const handleFilterChange = (filterName, value) => {
+    // update the selected filters
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      // its store the previouse value of filter
+      [filterName]: value,
     }));
-  }
-
-
-
+  };
   return (
     <>
-    <span class="material-symbols-outlined filter" onClick={handelOpenModel}>tune</span>
-    {isModalOpen && (<FilterModal 
-    selectedFilters={selectedFilters}
-    onFilterChange= {handelFilterChange}
-    onClose={handleCloseModal}
-    />)}
+      <span
+        className="material-symbols-outlined fliter filter"
+        onClick={handleOpenmodal}
+      >
+        tune
+      </span>
+      {isModalOpen && (
+        <FilterModal
+          selectedFilters={selectedFilters}
+          onFilterChange={handleFilterChange}
+          onClose={handleCloseModal}
+        />
+      )}
     </>
-  )
+  );
 };
-
 export default Filter;
