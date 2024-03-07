@@ -34,7 +34,7 @@
 }
 
 .img-item.first-image {
-  grid-row: span 2; /* This spans two rows for the first image */
+  grid-row: span 2  ; /* This spans two rows for the first image */
 }
 
 .images {
@@ -209,7 +209,8 @@ input:focus {
 }
 
 .map-image-container {
-  height: 100%;
+  width: 50%;
+  height: 26rem;
 }
 
 .map-header {
@@ -269,4 +270,55 @@ input:focus {
 
 .searchDate:hover::placeholder {
   color: black;
+}
+/* Modal.css */
+
+/* Original styles remain unchanged */
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .property-container {
+    width: 96%;
+    margin: 2%;
+  }
+  
+  .modal-content {
+    width: 90%;
+  }
+  
+  .payment-form {
+    width: 95%;
+  }
+}
+
+@media (max-width: 576px) {
+  .property-container {
+    width: 94%;
+    margin: 3%;
+  }
+  
+  .modal-content {
+    width: 95%;
+  }
+  
+  .payment-form {
+    width: 98%;
+  }
+  
+  .property-img-container {
+    grid-template-columns: 100%;
+    grid-template-rows: auto;
+    gap: 10px;
+  }
+  
+  .img-item.first-image {
+    grid-row: auto; /* Reset the span */
+  }
+
+  .extra-info {
+    width: 100%; /* Adjust the width to take up the full width */
+    height: auto; /* Allow the height to adjust based on content */
+    
+  }
+  
 }
