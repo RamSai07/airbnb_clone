@@ -24,9 +24,12 @@ const MapComponent = ({ address }) => {
         console.log("useEffect");
         const response = await fetch(
           `https://nominatim.openstreetmap.org/search?format=json&q=${city}`
+          
         );
 
         const data = await response.json();
+        console.log(data)
+
 
         if (isMounted) {
           if (data.length > 0) {
