@@ -4,7 +4,22 @@ import {createBrowserRouter,createRoutesFromElements,Route,RouterProvider} from 
 import Main from "./Components/Home/Main";
 import PropertyList from './Components/Home/PropertyList';
 import PropertyDetails from "./Components/PropertyDetails/PropertyDetails";
+import {Flip,ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
+import { useDispatch,useSelector } from 'react-redux';
+import { currentUser } from './Store/User/user-action';
+import { userActions } from './Store/User/user-slice';
+import Login from './Components/User/Login';
 function App() {
+  const dispatch = useDispatch();
+  const {errors}=useSelector((state)=>state.user);
+  useEffect(()=>{
+    if(errors){
+      dispatch(userActions.clearError());
+    }
+    dispatch(currentUser());
+  },[errors,dispatch]);
   //manages the  routes of our app using createBrowserRouter method which is a part of react-router-dom library
   const router =createBrowserRouter(
     //creates routes from the elements passed to it.
@@ -19,6 +34,7 @@ function App() {
         path="propertylist/:id"
         exact
         />
+        <Route path='/login' element={<Login/>}></Route>
       </Route>
       
 
