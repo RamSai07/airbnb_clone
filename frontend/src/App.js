@@ -11,6 +11,8 @@ import { useDispatch,useSelector } from 'react-redux';
 import { currentUser } from './Store/User/user-action';
 import { userActions } from './Store/User/user-slice';
 import Login from './Components/User/Login';
+import Signup from './Components/User/Signup';
+import Profile from './Components/User/Profile';
 function App() {
   const dispatch = useDispatch();
   const {errors}=useSelector((state)=>state.user);
@@ -34,7 +36,11 @@ function App() {
         path="propertylist/:id"
         exact
         />
-        <Route path='/login' element={<Login/>}></Route>
+        <Route id='login' path='/login' element={<Login/>}></Route>
+        <Route id='signup' path='/signup' element={<Signup/>}></Route>
+        <Route id='profile' path='/profile' element={<Profile/>}></Route>
+
+
       </Route>
       
 
@@ -44,6 +50,12 @@ function App() {
     <div className="App">
       {/* this ensure that the routing function is available throughout the application */}
       <RouterProvider router={router}/>
+      <ToastContainer
+      position='bottom-center'
+      autoClose={3000}
+      draggable={true}
+      transition={Flip}
+      />
     </div>
   );
 }
