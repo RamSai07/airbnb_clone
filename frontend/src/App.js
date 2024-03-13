@@ -13,6 +13,8 @@ import { userActions } from './Store/User/user-slice';
 import Login from './Components/User/Login';
 import Signup from './Components/User/Signup';
 import Profile from './Components/User/Profile';
+import EditProfile from './Components/User/EditProfile';
+import UpdatePassword from './Components/User/UpdatePassword';
 function App() {
   const dispatch = useDispatch();
   const {errors}=useSelector((state)=>state.user);
@@ -39,6 +41,10 @@ function App() {
         <Route id='login' path='/login' element={<Login/>}></Route>
         <Route id='signup' path='/signup' element={<Signup/>}></Route>
         <Route id='profile' path='/profile' element={<Profile/>}></Route>
+        <Route id='editprofile' path='/editprofile' element={<EditProfile/>}></Route>
+        <Route id='updatepassword' path='/user/updatepassword' element={<UpdatePassword/>}></Route>
+
+
 
 
       </Route>
