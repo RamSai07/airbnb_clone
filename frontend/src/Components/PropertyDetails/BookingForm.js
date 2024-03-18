@@ -3,6 +3,7 @@ import moment from "moment";
 import { DatePicker, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { setPaymentDetails } from "../../Store/Payment/payment-slice";
 
 const BookingForm = ({ price, propertyName, address, maximumGuest, propertyId, currentBookings }) => {
   const [paymentData, setPaymentData] = useState({});
@@ -41,9 +42,33 @@ const BookingForm = ({ price, propertyName, address, maximumGuest, propertyId, c
     setPaymentData((prevData) => ({ ...prevData, [keyName]: value }));
   };
 
+  const handelBookPlace=(e)=>{
+    e.preventDefault();
+    if(
+      userData?.name &&
+      userData?.guests &&
+      userData?.phoneNo &&
+      userData?.checkinDate &&
+      userData?.checkoutDate
+      ){
+        dispatch(
+          setPaymentDetails({
+            ...paymentData,
+            propertyName,
+            address,
+            maximumGuest,
+          })
+        );
+        navigate(`/payment/${propertyId}`);
+
+    }else{
+
+    }
+  }
+
   return (
     <div className="form-container">
-      <form className="payment-form">
+      <form className="payment-form" onSubmit={handelBookPlace}>
         <div className="price-pernight">
           <b>₹{price}</b> <span> / per night</span>
         </div>

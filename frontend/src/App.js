@@ -22,7 +22,12 @@ import EditProfile from "./Components/User/EditProfile";
 import UpdatePassword from "./Components/User/UpdatePassword";
 import ForgotPassword from "./Components/User/ForgotPassword";
 import ResetPassword from "./Components/User/ResetPassword";
+import Payment from "./Components/Payment/Payment";
+import {Elements} from "@stripe/react-stripe-js";
+import {loadStripe} from "@stripe/stripe-js";
 function App() {
+  const stripePromise = loadStripe( "pk_test_51OtB9bSBmHfqwwbmoufPjqxhfjUy19wRTUqo68ZtESUtIQLt4UR4hhZcXzWWaV6U9iYTeufyCBH8Gjp9aTnujrm700iPoZuh7v" );
+  
   const dispatch = useDispatch();
   const { errors } = useSelector((state) => state.user);
   useEffect(() => {
@@ -68,6 +73,16 @@ function App() {
           path="/user/resetPassword/:token"
           element={<ResetPassword />}
         ></Route>
+        <Route
+        id="payment"
+        path="payment/:propertyId"
+        element={
+          <Elements stripe={stripePromise}>
+            <Payment/>
+          </Elements>
+        }>
+          
+        </Route>
       </Route>
     )
   );
