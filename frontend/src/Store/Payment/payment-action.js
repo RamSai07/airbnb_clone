@@ -1,6 +1,7 @@
 import { setPaymentDetails } from "./payment-slice";
-import { CardNumberElement } from "@stripe/react-stripe-js";
 import axios from "axios";
+import {createBooking} from "../../Store/Booking/booking-action";
+import { CardNumberElement } from "@stripe/react-stripe-js";
 
 export const processPayment = ({
   totalAmount,
@@ -23,9 +24,9 @@ export const processPayment = ({
       console.error("stripe is not initialized");
       return;
     }
-    const CardNumberElement = elements.getElement(CardNumberElement);
+    const cardNumberElement = elements.getElement(CardNumberElement);
     try {
-      const response = await axios(
+      const response = await axios.post(
         "/api/v1/rent/user/checkout-session",
         {
           amount: totalAmount,
@@ -46,12 +47,25 @@ export const processPayment = ({
           },
         }
       );
+      
       const data = response.data;
       await stripe.confirmCardPayment(data.clientSecret, {
         payment_method: {
-          card: CardNumberElement,
+          card: cardNumberElement,
         },
       });
+
+      dispatch(createBooking({
+        booking:bookingId,
+        property:propertyId,
+        price:totalAmount,
+        guests:maximumGuest,
+        fromDate:checkinDate,
+        toDate:checkoutDate,
+        nights,
+      })
+      );
+
       dispatch(
         setPaymentDetails({
           checkinDate,

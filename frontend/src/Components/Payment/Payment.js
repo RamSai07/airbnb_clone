@@ -9,6 +9,7 @@ import {
 import { useDispatch,useSelector } from 'react-redux';
 import { useNavigate,useParams } from 'react-router-dom';
 import {processPayment} from "../../Store/Payment/payment-action";
+import "../../CSS/MyBookings.css";
 
 const Payment = () => {
   const stripe = useStripe();
